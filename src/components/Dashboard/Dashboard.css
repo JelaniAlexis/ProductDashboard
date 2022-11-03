@@ -1,0 +1,11 @@
+.dashboard {
+    width: 100%;
+    min-height: 90vh;
+    background: #191A19;
+    color: white;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto;
+    border-radius: 3rem;
+    grid-auto-rows: 40rem;
+}
