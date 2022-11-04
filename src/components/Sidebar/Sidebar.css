@@ -1,9 +1,11 @@
 .sidebar {
+    background: #191A19;
     padding: 4rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-    box-shadow: 0 0 5rem 0 rgba(25, 26, 25, 1);
+    border-radius: 3rem;
+    margin-right: 2rem;
 }
 
 .sidebar__link {

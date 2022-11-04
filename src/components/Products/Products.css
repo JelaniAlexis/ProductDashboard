@@ -1,3 +1,10 @@
+.products {
+    border-radius: 3rem;
+    background: #191A19;
+    padding: 4rem;
+    margin-left: 2rem;
+}
+
 .header {
     height: 10rem;
     display: flex;
@@ -9,10 +16,6 @@
     font-size: 200%;
 }
 
-.products {
-    padding: 4rem;
-}
-
 .productList {
     gap: 4rem;
     height: 80%;
@@ -22,7 +25,7 @@
 }
 
 .productList__item {
-    width: 30rem;
+    width: 30%;
     height: 40rem;
     display: flex;
     justify-content: center;
@@ -32,6 +35,7 @@
     border-radius: 1rem;
     position: relative;
     transition: 0.3s all;
+    row-gap: 1rem;
 }
 
 .productList__button {

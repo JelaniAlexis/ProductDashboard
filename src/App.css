@@ -13,7 +13,7 @@ body {
   font-family: sans-serif;
   color: black;
   padding: 4rem;
-  background: linear-gradient(to bottom right, #4E9F3D, 95%, #1E5128);
+  background: linear-gradient(to bottom right, #4E9F3D, 65%, #1E5128);
   min-height: 100vh;
 }
 
