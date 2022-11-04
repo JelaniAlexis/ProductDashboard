@@ -1,14 +1,19 @@
 import React from 'react';
+
+// Components
 import Products from '../Products/Products';
 import Sidebar from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
+
+// Styling
 import './Dashboard.css';
 
-import flowers from '../../img/flowers.jpg';
-import heroin from '../../img/heroin.jpg';
-import jesus from '../../img/jesus.jpg';
-import music from '../../img/music.jpg';
-import sky from '../../img/sky.jpg';
+// Import data from data folder
+import productData from '../../data/productData';
+import navItems from '../../data/navItems';
+
+// Import helpers from helpers folder
+import chooseImage from '../../helpers/chooseImage';
 
 class Dashboard extends React.Component {
 
@@ -26,32 +31,11 @@ class Dashboard extends React.Component {
 
     addButtonClicked = (input) => {
 
-        let newCardImg;
-
-        switch (input) {
-            case "flowers":
-                newCardImg = flowers;
-                break;
-            
-            case "heroin":
-                newCardImg = heroin;
-                break;
-            
-            case "jesus":
-                newCardImg = jesus;
-                break;
-            
-            case "music":
-                newCardImg = music;
-                break;
-            default:
-                newCardImg = sky;
-                break;
-            
-        }
+        let newCardImg = chooseImage(input);
 
         let newCard = [
             {
+                id: this.state.productCards.length,
                 name: input,
                 img: newCardImg
             }
@@ -66,47 +50,13 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        let productCards = [
-            {
-                name: "Placeholder"
-            },
-            {
-                name: "Flowers",
-                img: flowers,
-            },
-            {
-                name: "Heroin",
-                img: heroin,
-            }
-        ];
-        this.setState({productCards: productCards});
+        this.setState({productCards: productData});
     }
 
 
 
     render() {
-        let navItems = [
-            {
-                name: "Home",
-                notifications: 0,
-            },
-            {
-                name: "Facturen",
-                notifications: 1,
-            },
-            {
-                name: "Bestellingen",
-                notifications: 0,
-            },
-            {
-                name: "Retour",
-                notifications: 0,
-            },
-            {
-                name: "Contact",
-                notifications: 1,
-            }
-        ];
+        
 
         if (this.state.open) {
             return(
