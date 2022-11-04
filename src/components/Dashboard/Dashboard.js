@@ -1,20 +1,31 @@
 import React from 'react';
+
+// Components
 import Products from '../Products/Products';
 import Sidebar from '../Sidebar/Sidebar';
 import Modal from '../Modal/Modal';
+
+// Styling
 import './Dashboard.css';
 
-import flowers from '../../img/flowers.jpg';
-import heroin from '../../img/heroin.jpg';
-import jesus from '../../img/jesus.jpg';
-import music from '../../img/music.jpg';
-import sky from '../../img/sky.jpg';
+// Import data from data folder
+import productData from '../../data/productData';
+import navItems from '../../data/navItems';
+import modalModes from '../../data/modalModes';
+
+// Import helpers from helpers folder
+import chooseImage from '../../helpers/chooseImage';
 
 class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {productCards: [], open: true}
+        this.state = {
+            productCards: [],
+            open: true,
+            clickedCard: {},
+            modalMode: modalModes.Add
+        }
     }
 
     onButtonClicked = () => {
@@ -24,34 +35,24 @@ class Dashboard extends React.Component {
         })
     }
 
+    onCardClicked = (product) => {
+        const modalMode = this.state.productCards[product.id].isAddButton ? modalModes.Add : modalModes.Edit;
+        this.setState({
+            open: !this.state.open,
+            clickedCard: this.state.productCards[product.id],
+            modalMode: modalMode
+        });
+        
+    }
+
     addButtonClicked = (input) => {
 
-        let newCardImg;
-
-        switch (input) {
-            case "flowers":
-                newCardImg = flowers;
-                break;
-            
-            case "heroin":
-                newCardImg = heroin;
-                break;
-            
-            case "jesus":
-                newCardImg = jesus;
-                break;
-            
-            case "music":
-                newCardImg = music;
-                break;
-            default:
-                newCardImg = sky;
-                break;
-            
-        }
+        let newCardImg = chooseImage(input);
 
         let newCard = [
             {
+                id: this.state.productCards.length,
+                isAddButton: false,
                 name: input,
                 img: newCardImg
             }
@@ -65,58 +66,51 @@ class Dashboard extends React.Component {
         })
     }
 
+    editButtonClicked = (input) => {
+        let oldCard = this.state.clickedCard;
+
+        let newProductCardsState = this.state.productCards.filter(product => {
+            if (product.id === oldCard.id) return null;
+            return product;
+        });
+
+        console.log(newProductCardsState);
+
+        let newCard = {
+            id: oldCard.id,
+            isAddButton: false,
+            name: input,
+            img: chooseImage(input)
+        }
+
+        let newArray = newProductCardsState.concat(newCard).sort((a, b) => {
+            return a.id - b.id;
+        });
+
+        this.setState({
+            productCards: newArray,
+            open: !this.state.open,
+        })
+    }
+
     componentDidMount() {
-        let productCards = [
-            {
-                name: "Placeholder"
-            },
-            {
-                name: "Flowers",
-                img: flowers,
-            },
-            {
-                name: "Heroin",
-                img: heroin,
-            }
-        ];
-        this.setState({productCards: productCards});
+        this.setState({productCards: productData});
     }
 
 
 
     render() {
-        let navItems = [
-            {
-                name: "Home",
-                notifications: 0,
-            },
-            {
-                name: "Facturen",
-                notifications: 1,
-            },
-            {
-                name: "Bestellingen",
-                notifications: 0,
-            },
-            {
-                name: "Retour",
-                notifications: 0,
-            },
-            {
-                name: "Contact",
-                notifications: 1,
-            }
-        ];
+        
 
         if (this.state.open) {
             return(
                 <article className="dashboard">
                     <Sidebar navItems={navItems} buttonText="Go Premium"/>
-                    <Products productCards={this.state.productCards} headerText={"Mijn Producten"} buttonSymbol={"+"} buttonText="Voeg een product toe..." onButtonClicked={this.onButtonClicked}/>
+                    <Products onCardClicked={this.onCardClicked} productCards={this.state.productCards} headerText={"Mijn Producten"} buttonSymbol={"+"} buttonText="Voeg een product toe..." onButtonClicked={this.onButtonClicked}/>
                 </article>
             )
         }
-        return <Modal onButtonClicked={this.onButtonClicked} addButtonClicked={this.addButtonClicked}/>
+        return <Modal mode={this.state.modalMode} clickedCard={this.state.clickedCard} onButtonClicked={this.onButtonClicked} addButtonClicked={this.addButtonClicked} editButtonClicked={this.editButtonClicked}/>
     }    
 }
 

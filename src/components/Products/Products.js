@@ -1,17 +1,21 @@
 import './Products.css';
 
-const Products = ({ headerText, buttonSymbol, buttonText, productCards, onButtonClicked}) => {
+const Products = ({ headerText, buttonSymbol, buttonText, productCards, onButtonClicked, onCardClicked}) => {
 
-    let productCardsToRender = productCards.map(product => {
+    const productCardsToRender = productCards.map(product => {
 
-        if (product.name.toLowerCase() === "placeholder") return (
-            <li className="productList__item">
+        const sendProductToParent = (id) => {
+            onCardClicked(id);
+        }
+
+        if (product.isAddButton) return (
+            <li onClick={event => sendProductToParent(product)} key={product.id} className="productList__item">
                 <button onClick={onButtonClicked} className="productList__button">{buttonSymbol || "*"}</button>
                 <p className="productList__text">{buttonText || "Add..."}</p>
             </li>
         )
         return (
-            <li className="productList__item">
+            <li onClick={event => sendProductToParent(product)} key={product.id} className="productList__item productList__item--submitted">
                 <img className='productList__img' src={product.img} alt={product.name}></img>
                 <div className="productList__fade">
                     <p className="productList__imgText">{product.name}</p>
@@ -19,6 +23,7 @@ const Products = ({ headerText, buttonSymbol, buttonText, productCards, onButton
             </li>
         )
     })
+
     return (
         <section className="products">
             <header className="header">
