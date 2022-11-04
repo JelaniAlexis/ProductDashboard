@@ -11,6 +11,7 @@ import './Dashboard.css';
 // Import data from data folder
 import productData from '../../data/productData';
 import navItems from '../../data/navItems';
+import modalModes from '../../data/modalModes';
 
 // Import helpers from helpers folder
 import chooseImage from '../../helpers/chooseImage';
@@ -19,7 +20,12 @@ class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {productCards: [], open: true, clickedCard: {}}
+        this.state = {
+            productCards: [],
+            open: true,
+            clickedCard: {},
+            modalMode: modalModes.Add
+        }
     }
 
     onButtonClicked = () => {
@@ -29,12 +35,12 @@ class Dashboard extends React.Component {
         })
     }
 
-    onCardClicked = (id) => {
+    onCardClicked = (product) => {
+        const modalMode = this.state.productCards[product.id].isAddButton ? modalModes.Add : modalModes.Edit;
         this.setState({
             open: !this.state.open,
-            clickedCard: this.state.productCards[id],
-        }, () => {
-            console.log(this.state.clickedCard);
+            clickedCard: this.state.productCards[product.id],
+            modalMode: modalMode
         });
         
     }
@@ -46,12 +52,40 @@ class Dashboard extends React.Component {
         let newCard = [
             {
                 id: this.state.productCards.length,
+                isAddButton: false,
                 name: input,
                 img: newCardImg
             }
         ]
 
         let newArray = this.state.productCards.concat(newCard);
+
+        this.setState({
+            productCards: newArray,
+            open: !this.state.open,
+        })
+    }
+
+    editButtonClicked = (input) => {
+        let oldCard = this.state.clickedCard;
+
+        let newProductCardsState = this.state.productCards.filter(product => {
+            if (product.id === oldCard.id) return null;
+            return product;
+        });
+
+        console.log(newProductCardsState);
+
+        let newCard = {
+            id: oldCard.id,
+            isAddButton: false,
+            name: input,
+            img: chooseImage(input)
+        }
+
+        let newArray = newProductCardsState.concat(newCard).sort((a, b) => {
+            return a.id - b.id;
+        });
 
         this.setState({
             productCards: newArray,
@@ -76,7 +110,7 @@ class Dashboard extends React.Component {
                 </article>
             )
         }
-        return <Modal clickedCard={this.state.clickedCard} onButtonClicked={this.onButtonClicked} addButtonClicked={this.addButtonClicked}/>
+        return <Modal mode={this.state.modalMode} clickedCard={this.state.clickedCard} onButtonClicked={this.onButtonClicked} addButtonClicked={this.addButtonClicked} editButtonClicked={this.editButtonClicked}/>
     }    
 }
 

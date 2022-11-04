@@ -39,7 +39,7 @@
     border: none;
     color: #eee;
     border-radius: 5rem;
-    background: linear-gradient(to bottom right, #4E9F3D, 95%, #1E5128);
+    background: linear-gradient(to bottom right, #4E9F3D, 65%, #1E5128);
     transition: 0.8s all;
     cursor: pointer;
 }
@@ -48,7 +48,7 @@
     position: relative;
     top: 0;
     left: 92.5%;
-    background: linear-gradient(to bottom right, #4E9F3D, 65%, #1E5128);
+    background: linear-gradient(to bottom right, #4E9F3D, 85%, #1E5128);
     border: none;
     width: 3rem;
     height: 3rem;

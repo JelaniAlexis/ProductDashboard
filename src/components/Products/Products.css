@@ -1,8 +1,12 @@
 .header {
-    height: 20rem;
+    height: 10rem;
     display: flex;
     align-items: center;
     padding-bottom: 4rem;
+}
+
+.header__h1 {
+    font-size: 200%;
 }
 
 .products {

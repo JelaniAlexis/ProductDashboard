@@ -2,27 +2,27 @@ const navItems = [
     {
         id: 0,
         name: "Home",
-        message: "0"
+        notifications: "0"
     },
     {
         id: 1,
         name: "Facturen",
-        message: "3"
+        notifications: "3"
     },
     {
         id: 2,
         name: "Bestellingen",
-        message: "0"
+        notifications: "0"
     },
     {
         id: 3,
         name: "Retour",
-        message: "1"
+        notifications: "1"
     },
     {
         id: 4,
         name: "Contact",
-        message: "2"
+        notifications: "2"
     }
 ];
 
