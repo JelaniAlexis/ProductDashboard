@@ -4,7 +4,7 @@ import heroin from '../img/heroin.jpg';
 const products = [
     {
         id: 0,
-        name: "Placeholder"
+        name: "Add"
     },
     {
         id: 1,

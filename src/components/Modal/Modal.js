@@ -17,6 +17,12 @@ class Modal extends React.Component {
         if (this.state.input.length > 0) this.props.addButtonClicked(this.state.input);
     }
 
+    componentDidMount() {
+        this.setState({
+            input: this.props.clickedCard.name !== "Add" ? this.props.clickedCard.name : "",
+        })
+    }
+
     render() {
         return(
             <article className="modal">

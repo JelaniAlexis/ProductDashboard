@@ -19,7 +19,7 @@ class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {productCards: [], open: true}
+        this.state = {productCards: [], open: true, clickedCard: {}}
     }
 
     onButtonClicked = () => {
@@ -27,6 +27,16 @@ class Dashboard extends React.Component {
         this.setState({
             open: !this.state.open,
         })
+    }
+
+    onCardClicked = (id) => {
+        this.setState({
+            open: !this.state.open,
+            clickedCard: this.state.productCards[id],
+        }, () => {
+            console.log(this.state.clickedCard);
+        });
+        
     }
 
     addButtonClicked = (input) => {
@@ -62,11 +72,11 @@ class Dashboard extends React.Component {
             return(
                 <article className="dashboard">
                     <Sidebar navItems={navItems} buttonText="Go Premium"/>
-                    <Products productCards={this.state.productCards} headerText={"Mijn Producten"} buttonSymbol={"+"} buttonText="Voeg een product toe..." onButtonClicked={this.onButtonClicked}/>
+                    <Products onCardClicked={this.onCardClicked} productCards={this.state.productCards} headerText={"Mijn Producten"} buttonSymbol={"+"} buttonText="Voeg een product toe..." onButtonClicked={this.onButtonClicked}/>
                 </article>
             )
         }
-        return <Modal onButtonClicked={this.onButtonClicked} addButtonClicked={this.addButtonClicked}/>
+        return <Modal clickedCard={this.state.clickedCard} onButtonClicked={this.onButtonClicked} addButtonClicked={this.addButtonClicked}/>
     }    
 }
 
